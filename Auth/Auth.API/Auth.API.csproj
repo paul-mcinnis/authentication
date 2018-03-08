@@ -16,4 +16,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Auth.Data\Auth.Data.csproj" />
+    <ProjectReference Include="..\Auth.Library\Auth.Library.csproj" />
+    <ProjectReference Include="..\Auth.Tests\Auth.Tests.csproj" />
+  </ItemGroup>
 </Project>
