@@ -1,7 +1,7 @@
-﻿using System;
-namespace Auth.Library.Interfaces
+﻿namespace Auth.Library.Interfaces
 {
     public interface IFactory
     {
+        T Make<T>();
     }
 }

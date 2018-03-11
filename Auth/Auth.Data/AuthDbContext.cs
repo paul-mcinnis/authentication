@@ -19,6 +19,7 @@ namespace Auth.Data
                 entity.ToTable("User");
                 entity.Property(e => e.ModelId).HasColumnName("user_id");
                 entity.Property(e => e.UserName).HasColumnName("user_name");
+                entity.HasIndex(e => e.UserName).IsUnique(true);
             });
         }
     }
