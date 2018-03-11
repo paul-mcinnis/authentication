@@ -1,9 +1,9 @@
 ﻿using System;
 namespace Auth.Data
 {
-    public class DbContext
+    public class AuthDbContext
     {
-        public DbContext()
+        public AuthDbContext()
         {
         }
     }
