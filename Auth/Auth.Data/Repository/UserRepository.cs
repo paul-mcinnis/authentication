@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Auth.Data.Models;
 using Auth.Library.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Data.Repository
 {
@@ -24,12 +26,19 @@ namespace Auth.Data.Repository
             
             await _context.User.AddAsync(ToAdd);
             await _context.SaveChangesAsync();
+            
             return model;
         }
         
-        public Task<IUser> GetByIdAsync(int modelId)
+        public async Task<IUser> GetByIdAsync(int modelId)
         {
-            throw new System.NotImplementedException();
+            if (modelId != null)
+            {
+                return await (from User in _context.User where User.ModelId == modelId select User)
+                    .FirstOrDefaultAsync();
+            }
+            
+            return null;
         }
 
         public Task<IEnumerable<IUser>> GetAllAsync()
