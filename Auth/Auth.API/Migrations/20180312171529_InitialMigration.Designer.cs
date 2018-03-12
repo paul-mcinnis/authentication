@@ -12,7 +12,7 @@ namespace Auth.API.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
     [Migration("20180312171529_testPg")]
-    partial class testPg
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

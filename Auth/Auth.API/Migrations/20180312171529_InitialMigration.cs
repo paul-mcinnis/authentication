@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Auth.API.Migrations
 {
-    public partial class testPg : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
