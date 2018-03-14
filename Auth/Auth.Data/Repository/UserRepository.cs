@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Auth.Data.Models;
+using Auth.Data.Repository.Interfaces;
 using Auth.Library.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,18 +33,12 @@ namespace Auth.Data.Repository
         
         public async Task<IUser> GetByIdAsync(int modelId)
         {
-            if (modelId != null)
-            {
-                return await (from User in _context.User where User.ModelId == modelId select User)
-                    .FirstOrDefaultAsync();
-            }
-            
-            return null;
+            throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<IUser>> GetAllAsync()
+        public async Task<IEnumerable<IUser>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await (from User in _context.User select User).ToListAsync();
         }
 
 
@@ -60,6 +55,13 @@ namespace Auth.Data.Repository
         public Task DeleteByIdAsync(int modelId)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<bool> AuthAsync(IUser user)
+        {
+            var ToAuth = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+
+            return (ToAuth != null);
         }
     }
 }

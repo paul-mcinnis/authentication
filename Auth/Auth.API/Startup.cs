@@ -1,4 +1,6 @@
 ﻿using Auth.Data;
+using Auth.Data.Repository;
+using Auth.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,7 @@ namespace Auth.API
                 )
             );
             
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddMvc();
         }
 

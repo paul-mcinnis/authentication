@@ -10,13 +10,6 @@ namespace Auth.Library.Interfaces
     public interface IRepository<T> where T : IModel
     {
         /// <summary>
-        /// Get singular model by its unique model ID.
-        /// </summary>
-        /// <param name="modelId">The unique model ID to retrieve by</param>
-        /// <returns>The requested model</returns>
-        Task<T> GetByIdAsync(int modelId);
-
-        /// <summary>
         /// Get all from the data collection as an enumerable set.
         /// </summary>
         /// <returns>An <c>IEnumerable</c> containing all in the data collection</returns>
