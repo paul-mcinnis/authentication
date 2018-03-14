@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Auth.Data;
+using Auth.Data.Repository;
+using Auth.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Auth.API
 {
@@ -23,6 +21,17 @@ namespace Auth.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Use a PostgreSQL database
+            var sqlConnectionString = Configuration.GetConnectionString("DataAccessPostgreSqlProvider");
+
+            services.AddDbContext<AuthDbContext>(options =>
+                options.UseNpgsql(
+                    sqlConnectionString,
+                    b => b.MigrationsAssembly("Auth.API")
+                )
+            );
+            
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddMvc();
         }
 
