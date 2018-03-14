@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Auth.Library.Models;
 using Auth.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Auth.API.Controllers
 {
@@ -36,6 +37,7 @@ namespace Auth.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] User user)
         {
+            if (!ModelState.IsValid) return BadRequest();
             try 
             {
                 await _userRepository.AddAsync(user);
@@ -58,6 +60,8 @@ namespace Auth.API.Controllers
             {
                 return BadRequest();
             }
+
+            return BadRequest();
         }
     }
 }
