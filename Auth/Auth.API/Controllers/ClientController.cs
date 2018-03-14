@@ -18,21 +18,6 @@ namespace Auth.API.Controllers
         {
             _userRepository = userRepository;
         }
-
-        [HttpGet]
-        public IActionResult Test()
-        {
-            return Ok();
-        }
-
-        [HttpPost]
-        public IActionResult Test2([FromBody] User user)
-        {
-            if (user != null)
-                return Ok(user.UserName);
-            else
-                return BadRequest();
-        }
         
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] User user)
@@ -52,6 +37,7 @@ namespace Auth.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Authenticate([FromBody] User user)
         {
+            if (!ModelState.IsValid) return BadRequest();
             try
             {
                 return Ok(await _userRepository.AuthAsync(user));
