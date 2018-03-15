@@ -7,5 +7,7 @@ namespace Auth.Library.Interfaces
         /// Unique ID for the model implementing this interface.
         /// </summary>
         int ModelId { get; set; }
+        
+        
     }
 }
