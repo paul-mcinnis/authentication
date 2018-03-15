@@ -17,23 +17,30 @@ namespace Auth.Data.Repository
         {
             _context = context;
         }
-        
-        public async Task<IUser> AddAsync(IUser model)
+
+        private async Task<IUser> GetByName(IUser user)
         {
+            return await (from User in _context.User where User.UserName == user.UserName select User).FirstOrDefaultAsync();
+        }
+        
+        public async Task<IUser> AddAsync(IUser user)
+        {
+            if (GetByName(user).Result != null) return null;
             var ToAdd = new User()
             {
-                UserName = model.UserName
+                UserName = user.UserName
             };
             
             await _context.User.AddAsync(ToAdd);
             await _context.SaveChangesAsync();
             
-            return model;
+            return user;
         }
-        
-        public async Task<IUser> GetByIdAsync(int modelId)
+
+        public async Task DeleteAsync(IUser user)
         {
-            throw new System.NotImplementedException();
+            _context.User.Remove(await _context.User.FirstOrDefaultAsync(r => r.UserName == user.UserName));
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<IUser>> GetAllAsync()
@@ -41,27 +48,27 @@ namespace Auth.Data.Repository
             return await (from User in _context.User select User).ToListAsync();
         }
 
-
-        public Task UpdateAsync(IUser model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task DeleteAsync(IUser model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task DeleteByIdAsync(int modelId)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<bool> AuthAsync(IUser user)
         {
-            var ToAuth = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+            var toAuth = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
 
-            return (ToAuth != null);
+            return (toAuth != null);
+        }
+
+        public async Task<bool> UpdateNameAsync(IUser user, string newName)
+        {
+            if(newName == null || await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName) != null) return false;
+            var toUpdate = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+
+            if (toUpdate != null)
+            {
+                toUpdate.UserName = newName;
+                _context.User.Update(toUpdate);
+                _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }

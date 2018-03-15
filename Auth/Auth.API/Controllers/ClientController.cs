@@ -46,8 +46,22 @@ namespace Auth.API.Controllers
             {
                 return BadRequest();
             }
+        }
 
-            return BadRequest();
+        // must first confirm identity in the future
+        [HttpPost]
+        public async Task<IActionResult> UpdateName([FromBody] User user)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            try
+            {
+                var resp = await _userRepository.UpdateNameAsync(user, "updated");
+                return Ok(resp);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }
