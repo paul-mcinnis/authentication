@@ -22,23 +22,11 @@ namespace Auth.Library.Interfaces
         /// <returns>The updated copy of the added model</returns>
         Task<T> AddAsync(T model);
 
-        /// <summary>
-        /// Updates the given model in the underlying data asynchronously.
-        /// </summary>
-        /// <param name="model">The model to update</param>
-        Task UpdateAsync(T model);
 
         /// <summary>
         /// Deletes the given model from the underlying data asynchronously.
         /// </summary>
         /// <param name="model">The model to delete</param>
         Task DeleteAsync(T model);
-
-        /// <summary>
-        /// Deletes the model with the given unique model ID from the
-        /// underlying data set asynchronously.
-        /// </summary>
-        /// <param name="modelId">The ID of the model to delete</param>
-        Task DeleteByIdAsync(int modelId);
     }
 }
