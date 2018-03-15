@@ -10,5 +10,7 @@ namespace Auth.Data.Repository.Interfaces
     public interface IUserRepository : IRepository<IUser>
     {
         Task<bool> AuthAsync(IUser user);
+
+        Task<bool> UpdateNameAsync(IUser user, string newName);
     }
 }

@@ -46,8 +46,13 @@ namespace Auth.API.Controllers
             {
                 return BadRequest();
             }
-
-            return BadRequest();
         }
+
+        // must first confirm identity in the future
+        [HttpPost]
+        public async Task<IActionResult> UpdateName([FromBody] User user)
+        {
+            return BadRequest();
+        }        
     }
 }
