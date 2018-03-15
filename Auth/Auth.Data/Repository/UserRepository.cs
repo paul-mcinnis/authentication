@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Auth.Data.Models;
+using Auth.Library.Models;
 using Auth.Data.Repository.Interfaces;
 using Auth.Library.Interfaces;
 using Microsoft.EntityFrameworkCore;

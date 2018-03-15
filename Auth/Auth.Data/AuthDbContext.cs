@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Auth.Data.Models;
+﻿using Auth.Library.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Data
 {
@@ -20,6 +20,8 @@ namespace Auth.Data
                 entity.Property(e => e.ModelId).HasColumnName("user_id");
                 entity.Property(e => e.UserName).HasColumnName("user_name");
                 entity.HasIndex(e => e.UserName).IsUnique(true);
+                entity.Property(e => e.IsActive).HasColumnName("active");
+                entity.Property(e => e.IsActive).HasDefaultValue(true);
             });
         }
     }
