@@ -53,6 +53,20 @@ namespace Auth.API.Controllers
         public async Task<IActionResult> UpdateName([FromBody] User user)
         {
             return BadRequest();
-        }        
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromBody] User user)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            try
+            {
+                return Ok(await _userRepository.DeactivateAsync(user));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

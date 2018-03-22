@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Auth.Library.Models;
@@ -57,18 +58,64 @@ namespace Auth.Data.Repository
 
         public async Task<bool> UpdateNameAsync(IUser user, string newName)
         {
-            if(newName == null || await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName) != null) return false;
-            var toUpdate = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
-
-            if (toUpdate != null)
+            if(newName == null) return false;
+            try
             {
+                var toUpdate = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+
+                if (toUpdate == null) return false;
+               
                 toUpdate.UserName = newName;
                 _context.User.Update(toUpdate);
                 _context.SaveChangesAsync();
-                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+            return true;
+        }
+
+        public async Task<bool> DeactivateAsync(IUser user)
+        {
+            if (user == null) return false;
+            try
+            {
+                var toDeactivate = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+
+                if (toDeactivate == null || toDeactivate.IsActive != true) return false;
+            
+                toDeactivate.IsActive = false;
+                _context.User.Update(toDeactivate);
+                _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+            return true;
+        }
+
+        public async Task<bool> ReactivateAsync(IUser user)
+        {
+            if (user == null) return false;
+            try
+            {
+                var toReactivate = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+
+                if (toReactivate == null) return false;
+                toReactivate.IsActive = true;
+                _context.User.Update(toReactivate);
+                _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return false;
             }
 
-            return false;
+            return true;
         }
     }
 }
