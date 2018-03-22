@@ -11,6 +11,8 @@ namespace Auth.Data.Repository.Interfaces
     {
         Task<bool> AuthAsync(IUser user);
 
-        Task<bool> UpdateNameAsync(IUser user, string newName);
+        Task<bool> DeactivateAsync(IUser user);
+
+        Task<bool> ReactivateAsync(IUser user);
     }
 }
