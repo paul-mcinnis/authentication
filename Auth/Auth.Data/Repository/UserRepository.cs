@@ -56,27 +56,6 @@ namespace Auth.Data.Repository
             return (toAuth != null);
         }
 
-        public async Task<bool> UpdateNameAsync(IUser user, string newName)
-        {
-            if(newName == null) return false;
-            try
-            {
-                var toUpdate = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
-
-                if (toUpdate == null) return false;
-               
-                toUpdate.UserName = newName;
-                _context.User.Update(toUpdate);
-                _context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            
-            return true;
-        }
-
         public async Task<bool> DeactivateAsync(IUser user)
         {
             if (user == null) return false;

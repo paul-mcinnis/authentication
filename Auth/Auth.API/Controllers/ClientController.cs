@@ -48,13 +48,6 @@ namespace Auth.API.Controllers
             }
         }
 
-        // must first confirm identity in the future
-        [HttpPost]
-        public async Task<IActionResult> UpdateName([FromBody] User user)
-        {
-            return BadRequest();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Delete([FromBody] User user)
         {
