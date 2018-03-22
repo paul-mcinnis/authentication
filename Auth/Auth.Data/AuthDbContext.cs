@@ -18,8 +18,16 @@ namespace Auth.Data
             {
                 entity.ToTable("User");
                 entity.Property(e => e.ModelId).HasColumnName("user_id");
+                
+                entity.Property(e => e.DateCreated).HasColumnName("date_created");
+                entity.Property(e => e.DateCreated).ValueGeneratedOnAdd();
+                
+                entity.Property(e => e.DateModified).HasColumnName("date_modified");
+                entity.Property(e => e.DateModified).ValueGeneratedOnAddOrUpdate();
+                
                 entity.Property(e => e.UserName).HasColumnName("user_name");
                 entity.HasIndex(e => e.UserName).IsUnique(true);
+                
                 entity.Property(e => e.IsActive).HasColumnName("active");
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
             });
