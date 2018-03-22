@@ -31,5 +31,20 @@ namespace Auth.API.Controllers
                 return BadRequest();
             }
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> Reactivate([FromBody] User user)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            try
+            {
+                await _userRepository.ReactivateAsync(user);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
