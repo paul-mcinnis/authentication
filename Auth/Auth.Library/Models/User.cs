@@ -22,7 +22,14 @@ namespace Auth.Library.Models
         [StringLength(50, MinimumLength = 3)]
         public string UserName { get; set; }
         
+        [Column("password_digest")]
+        public string PasswordDigest { get; set; }
+        
+        [Column("password_salt")]
+        public string PasswordSalt { get; set; }
+        
         [Column("active")]
         public bool? IsActive { get; set; }
-    }
+
+        }
 }

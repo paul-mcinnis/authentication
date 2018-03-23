@@ -12,5 +12,15 @@ namespace Auth.Library.Interfaces
         /// nobody is truy deleted, their account is either active or inactive
         /// </summary>
         bool? IsActive { get; set; }
+        
+        /// <summary>
+        /// saves hashed password
+        /// </summary>
+        string PasswordDigest { get; set; }
+        
+        /// <summary>
+        /// Salt appended to the password before it is hashed
+        /// </summary>
+        string PasswordSalt { get; set; }
     }
 }
