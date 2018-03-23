@@ -19,9 +19,16 @@ namespace Auth.Data
                 entity.ToTable("User");
                 entity.Property(e => e.ModelId).HasColumnName("user_id");
                 
+                /// <summary>
+                /// Don't forget to configure the default value in your db 
+                /// </summary>
                 entity.Property(e => e.DateCreated).HasColumnName("date_created");
                 entity.Property(e => e.DateCreated).ValueGeneratedOnAdd();
                 
+                
+                /// <summary>
+                /// Don't forget to write the trigger to update the timestamp
+                /// </summary>
                 entity.Property(e => e.DateModified).HasColumnName("date_modified");
                 entity.Property(e => e.DateModified).ValueGeneratedOnAddOrUpdate();
                 
