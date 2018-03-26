@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Auth.API.Services;
 using Auth.Library.Models;
 using Auth.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Auth.API.Controllers
 {
@@ -13,19 +13,21 @@ namespace Auth.API.Controllers
     {
 
         private readonly IUserRepository _userRepository;
+        private readonly AuthService _authService;
 
         public ClientController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _authService = new AuthService(userRepository);
         }
         
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] Credentials cred)
         {
             if (!ModelState.IsValid) return BadRequest();
-            try 
+            try
             {
-                await _userRepository.AddAsync(user);
+                if (!await _authService.Register(cred)) return BadRequest();
                 return Ok();
             }
             catch(Exception)

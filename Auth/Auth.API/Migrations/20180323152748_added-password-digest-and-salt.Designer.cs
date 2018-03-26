@@ -11,9 +11,10 @@ using System;
 namespace Auth.API.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180323152748_added-password-digest-and-salt")]
+    partial class addedpassworddigestandsalt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +43,7 @@ namespace Auth.API.Migrations
                     b.Property<string>("PasswordDigest")
                         .HasColumnName("password_digest");
 
-                    b.Property<byte[]>("PasswordSalt")
+                    b.Property<string>("PasswordSalt")
                         .HasColumnName("password_salt");
 
                     b.Property<string>("UserName")

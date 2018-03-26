@@ -34,6 +34,9 @@ namespace Auth.Data
                 
                 entity.Property(e => e.UserName).HasColumnName("user_name");
                 entity.HasIndex(e => e.UserName).IsUnique(true);
+
+                entity.Property(e => e.PasswordDigest).HasColumnName("password_digest");
+                entity.Property(e => e.PasswordSalt).HasColumnName("password_salt");
                 
                 entity.Property(e => e.IsActive).HasColumnName("active");
                 entity.Property(e => e.IsActive).HasDefaultValue(true);

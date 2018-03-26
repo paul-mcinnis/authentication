@@ -14,5 +14,7 @@ namespace Auth.Data.Repository.Interfaces
         Task<bool> DeactivateAsync(IUser user);
 
         Task<bool> ReactivateAsync(IUser user);
+        
+        Task<IUser> GetByNameAsync(string credUserName);
     }
 }
