@@ -19,20 +19,20 @@ namespace Auth.Data.Repository
             _context = context;
         }
 
-        private async Task<IUser> GetByName(IUser user)
+        public async Task<IUser> GetByNameAsync(string username)
         {
-            return await (from User in _context.User where User.UserName == user.UserName select User).FirstOrDefaultAsync();
+            return await _context.User.FirstOrDefaultAsync(u => u.UserName == username);
         }
         
         public async Task<IUser> AddAsync(IUser user)
         {
-            if (GetByName(user).Result != null) return null;
-            var ToAdd = new User()
+            if (GetByNameAsync(user.UserName).Result != null) return null;
+            var toAdd = new User()
             {
                 UserName = user.UserName
             };
             
-            await _context.User.AddAsync(ToAdd);
+            await _context.User.AddAsync(toAdd);
             await _context.SaveChangesAsync();
             
             return user;
@@ -82,14 +82,12 @@ namespace Auth.Data.Repository
             if (user == null) return false;
             try
             {
-                var toReactivate = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName);
-
-                if (toReactivate == null) return false;
+                if (!(await GetByNameAsync(user.UserName) is User toReactivate)) return false;
                 toReactivate.IsActive = true;
                 _context.User.Update(toReactivate);
                 _context.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

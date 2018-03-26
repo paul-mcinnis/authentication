@@ -19,7 +19,7 @@ namespace Auth.API.Services
         public async Task<User> Register(IPassword cred)
         {
             //return null if user is already in repo
-            if (await _userRepository.GetByName(cred.UserName)) return null;
+            if (await _userRepository.GetByNameAsync(cred.UserName) != null) return null;
             try
             {
 
@@ -28,6 +28,7 @@ namespace Auth.API.Services
             {
                 return null;
             }
+            return null;
         }
     }
 }
