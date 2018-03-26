@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using Auth.API.Services;
 using Auth.Library.Models;
 using Auth.Data.Repository.Interfaces;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Auth.API.Controllers
 {
@@ -29,9 +27,7 @@ namespace Auth.API.Controllers
             if (!ModelState.IsValid) return BadRequest();
             try
             {
-                User user = await _authService.Register(cred);
-                if (user == null) return BadRequest();
-                await _userRepository.AddAsync(user);
+                if (!await _authService.Register(cred)) return BadRequest();
                 return Ok();
             }
             catch(Exception)

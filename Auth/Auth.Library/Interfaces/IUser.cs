@@ -21,6 +21,6 @@ namespace Auth.Library.Interfaces
         /// <summary>
         /// Salt appended to the password before it is hashed
         /// </summary>
-        string PasswordSalt { get; set; }
+        byte[] PasswordSalt { get; set; }
     }
 }

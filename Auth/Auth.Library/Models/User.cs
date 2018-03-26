@@ -26,7 +26,7 @@ namespace Auth.Library.Models
         public string PasswordDigest { get; set; }
         
         [Column("password_salt")]
-        public string PasswordSalt { get; set; }
+        public byte[] PasswordSalt { get; set; }
         
         [Column("active")]
         public bool? IsActive { get; set; }
