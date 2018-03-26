@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Auth.Data.Repository;
+using Auth.Data.Repository.Interfaces;
 using Auth.Library.Interfaces;
 using Auth.Library.Models;
 
@@ -6,18 +9,25 @@ namespace Auth.API.Services
 {
     public class AuthService
     {
-        private static AuthService _authService;
+        private readonly IUserRepository _userRepository;
 
-        private AuthService() {}
-
-        public static AuthService Instance
+        public AuthService(IUserRepository userRepository)
         {
-            get { return _authService ?? (_authService = new AuthService()); } 
+            _userRepository = userRepository;
         }
-        
+
         public async Task<User> Register(IPassword cred)
         {
-            return null;
+            //return null if user is already in repo
+            if (await _userRepository.GetByName(cred.UserName)) return null;
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }

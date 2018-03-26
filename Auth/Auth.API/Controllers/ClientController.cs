@@ -20,7 +20,7 @@ namespace Auth.API.Controllers
         public ClientController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _authService = AuthService.Instance;
+            _authService = new AuthService(userRepository);
         }
         
         [HttpPost]
