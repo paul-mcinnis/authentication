@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Auth.Library.Models;
@@ -26,16 +27,27 @@ namespace Auth.Data.Repository
         
         public async Task<IUser> AddAsync(IUser user)
         {
-            if (GetByNameAsync(user.UserName).Result != null) return null;
-            var toAdd = new User()
+            try
             {
-                UserName = user.UserName
-            };
+                if (GetByNameAsync(user.UserName).Result != null) return null;
+                var toAdd = new User()
+                {
+                    UserName = user.UserName,
+                    PasswordDigest = user.PasswordDigest,
+                    PasswordSalt = user.PasswordSalt
+                };
             
-            await _context.User.AddAsync(toAdd);
-            await _context.SaveChangesAsync();
+                await _context.User.AddAsync(toAdd);
+                await _context.SaveChangesAsync();
             
-            return user;
+                return user;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+            }
+
+            return null;
         }
 
         public async Task DeleteAsync(IUser user)
