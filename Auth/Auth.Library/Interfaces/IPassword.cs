@@ -1,6 +1,6 @@
 ﻿namespace Auth.Library.Interfaces
 {
-    public interface IPassword : IModel
+    public interface IPassword
     {
         /// <summary>
         /// UserName for User. Is usually Email, but it can be anything
@@ -8,7 +8,7 @@
         string UserName { get; set; }
         
         /// <summary>
-        /// saves hashed password
+        /// User Password. Never store this in persistant memeory
         /// </summary>
         string Password { get; set; }
     }
