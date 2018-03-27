@@ -64,5 +64,22 @@ namespace Auth.API.Services
             }
             return false;
         }
+
+        public async Task<bool> Authenticate(Credentials cred)
+        {
+            try
+            {
+                if (!(await _userRepository.GetByNameAsync(cred.UserName) is User user)) return false;
+
+                var digest = Hash(cred.Password, user.PasswordSalt);
+                return (digest == user.PasswordDigest);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+            }
+
+            return false;
+        }
     }
 }

@@ -37,12 +37,12 @@ namespace Auth.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Authenticate([FromBody] User user)
+        public async Task<IActionResult> Authenticate([FromBody] Credentials cred)
         {
             if (!ModelState.IsValid) return BadRequest();
             try
             {
-                return Ok(await _userRepository.AuthAsync(user));
+                return Ok(await _authService.Authenticate(cred));
             }
             catch (Exception)
             {
